@@ -1,9 +1,4 @@
-const RenderPosition = {
-  BEFOREBEGIN: 'beforebegin',
-  AFTERBEGIN: 'afterbegin',
-  BEFOREEND: 'beforeend',
-  AFTEREND: 'afterend',
-  };
+const RenderPosition = {BEFOREBEGIN: 'beforebegin', AFTERBEGIN: 'afterbegin', BEFOREEND: 'beforeend', AFTEREND: 'afterend'};
   
   const createElement = (template) => {
     const newElement = document.createElement('div');
