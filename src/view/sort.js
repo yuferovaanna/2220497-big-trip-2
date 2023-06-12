@@ -25,21 +25,21 @@ const createSortingTemplate = () => (
 </form>`
 );
 
-export default class SortingView {
-  constructor() {
-    this.element = null;
+export default class SortView {
+  #element = null;
+
+  get template() {
+    return createSortTemplate();
   }
 
-  getTemplate() {
-    return createSortingTemplate();
-  }
-
-  getElement() {
-    this.element = this.element || createElement(this.getTemplate());
-    return this.element;
+  get element() {
+    if (!this.#element){
+      this.#element = createElement(this.template);
+    }
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }
