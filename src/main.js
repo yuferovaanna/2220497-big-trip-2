@@ -7,7 +7,7 @@ import PointsModel from './model/point-model';
 const menuContainerElement = document.querySelector('.trip-controls__navigation');
 const filtersContainerElement = document.querySelector('.trip-controls__filters');
 const tripContainerElement = document.querySelector('.trip-events');
-const tripPresenter = new Trip(tripContainerElement, pointsModel);
+const tripPresenter = new Trip(tripContainerElement, PointsModel());
 const pointsModel = new PointsModel();
 
 render(new MenuView(), menuContainerElement);
