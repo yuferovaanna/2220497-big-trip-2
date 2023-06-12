@@ -1,26 +1,29 @@
 import { render, RenderPosition } from '../render.js';
-import Point from '../view/point.js';
-import PointEdit from '../view/point-edition.js';
-import PointNew from '../view/point-creation.js';
-import Sort from '../view/sort.js';
-import TripList from '../view/trip-list.js';
+import SortView from '../view/sort.js';
+import ListPointsView from '../view/trip-list.js';
+import PointView from '../view/point.js';
+import NewPointView from '../view/point-creation.js';
+import EditPointView from '../view/point-edition.js';
+import PointModel from '../model/point-model.js';
 
-class Trip{
-  constructor({container}) {
-    this.component = new TripList();
+export default class Trip {
+  constructor({container}){
+    this.component = new ListPointsView();
     this.container = container;
+    this.pointModel = new PointModel();
   }
 
   init() {
-    render(new Sort(), this.container, RenderPosition.BEFOREEND);
-    render(this.component, this.container);
-    render(new PointNew(), this.component.getElement(), RenderPosition.BEFOREEND);
-    render(new PointEdit(), this.component.getElement(), RenderPosition.BEFOREEND);
+    const points = this.pointModel.GetPoints();
+    const destinations = this.pointModel.GetDestinations();
+    const offersByType = this.pointModel.GetOffersByType();
+    render(new SortView(), this.container, RenderPosition.BEFOREEND);
+    render (this.component, this.container);
+    render (new NewPointView(), this.component.getElement(), RenderPosition.BEFOREEND);
+    render (new EditPointView(points[2], destinations, offersByType), this.component.getElement(), RenderPosition.BEFOREEND);
 
-    for(let i=0; i<3; i++) {
-      render(new Point(), this.component.getElement(), RenderPosition.BEFOREEND);
+    for (const point of points){
+      render(new PointView(point, destinations, offersByType), this.component.getElement());
     }
   }
 }
-
-export default Trip;
