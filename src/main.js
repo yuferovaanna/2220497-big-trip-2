@@ -8,7 +8,7 @@ const menuContainerElement = document.querySelector('.trip-controls__navigation'
 const filtersContainerElement = document.querySelector('.trip-controls__filters');
 const tripContainerElement = document.querySelector('.trip-events');
 const tripPresenter = new Trip(tripContainerElement, PointsModel());
-const pointsModel = new PointsModel();
+
 
 render(new MenuView(), menuContainerElement);
 render(new FiltersView(), filtersContainerElement);
