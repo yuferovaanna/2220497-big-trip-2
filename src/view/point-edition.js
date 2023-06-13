@@ -1,5 +1,5 @@
-import {createElement} from '../render.js';
-import { getDateTime } from '../utils.js';
+import {createElement} from '../render';
+import { getDateTime } from '../utils';
 const formattOfferTitles = (title) => title.split(' ').join('_');
 
 const createEditPointTemplate = (point, destinations, offersByType) => {

@@ -1,4 +1,4 @@
-import {createElement} from '../render';
+import { createElement } from '../render';
 import { humanizePointDueDate } from '../utils';
 import { getTime } from '../utils';
 import { getDate} from '../utils';
