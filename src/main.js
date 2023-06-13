@@ -1,8 +1,9 @@
 import { RenderPosition, render } from './framework/render.js';
-import PointsModel from './model/point-model.js';
-import PointFilterView from './view/filters.js';
-import RoutePresenter from './presenter/trip.js';
-import TripInfoView from './view/info-trip.js';
+import PointsModel from './model/points-model.js';
+import PointFilterView from './view/filter-view.js';
+import RoutePresenter from './presenter/route-presenter.js';
+import TripInfoView from './view/trip-info-view.js';
+import { generateFilter } from './mock/filter.js';
 
 const headerElement = document.querySelector('.page-header');
 const mainElement = document.querySelector('.page-body__page-main');
@@ -12,8 +13,9 @@ const tripEventsElement = mainElement.querySelector('.trip-events');
 
 const routePresenter = new RoutePresenter();
 const pointsModel = new PointsModel();
+const filters = generateFilter(pointsModel.points);
 
 render(new TripInfoView(), tripMainElement, RenderPosition.AFTERBEGIN);
-render(new PointFilterView(), tripControlsElement);
+render(new PointFilterView(filters), tripControlsElement);
 
 routePresenter.init(tripEventsElement, pointsModel);
