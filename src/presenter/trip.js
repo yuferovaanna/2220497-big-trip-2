@@ -1,27 +1,44 @@
-import { render, RenderPosition } from '../render.js';
-import SortView from '../view/sort.js';
-import ListPointsView from '../view/trip-list.js';
+import { render, replace } from '../framework/render.js';
+import EmptyListView from '../view/nothing-point.js';
+import PointEditView from '../view/point-edition.js';
+import PointListView from '../view/point-list.js';
+import PointSortView from '../view/sort.js';
 import PointView from '../view/point.js';
-import EditPointView from '../view/point-edition.js';
-import PointModel from '../model/point-model.js';
-import NoPointView from '../view/nothing-point.js';
 
+export default class RoutePresenter {
+  #routeContainer = null;
+  #pointsModel = null;
 
-export default class Trip {
-  #component = null;
-  #container = null;
-  #pointModel = null;
+  #pointListComponent = new PointListView();
+
+  #routePoints = [];
+
+  init = (routeContainer, pointsModel) => {
+    this.#routeContainer = routeContainer;
+    this.#pointsModel = pointsModel;
+    this.#routePoints = [...this.#pointsModel.points];
+
+    if (this.#routePoints.length === 0) {
+      render(new EmptyListView(), this.#routeContainer);
+    } else {
+      render(new PointSortView(),this.#routeContainer);
+      render(this.#pointListComponent, this.#routeContainer);
+      for (let i = 0; i < this.#routePoints.length; i++) {
+        this.#renderPoint(this.#routePoints[i]);
+      }
+    }
+  };
 
   #renderPoint = (point) => {
-    const pointView = new PointView(point, this.#pointModel.destinations, this.#pointModel.offersByType);
-    const editPointView = new EditPointView(point, this.#pointModel.destinations, this.#pointModel.offersByType);
+    const pointComponent = new PointView(point);
+    const pointEditComponent = new PointEditView(point);
 
     const replacePointToEditForm = () => {
-      this.#component.element.replaceChild(editPointView.element, pointView.element);
+      replace(pointEditComponent, pointComponent);
     };
 
     const replaceEditFormToPoint = () => {
-      this.#component.element.replaceChild(pointView.element, editPointView.element);
+      replace(pointComponent, pointEditComponent);
     };
 
     const onEscKeyDown = (evt) => {
@@ -32,43 +49,21 @@ export default class Trip {
       }
     };
 
-    pointView.element.querySelector('.event__rollup-btn').addEventListener('click', () => {
+    pointComponent.setEditRollUpHandler(() => {
       replacePointToEditForm();
       document.addEventListener('keydown', onEscKeyDown);
     });
 
-    editPointView.element.querySelector('.event__rollup-btn').addEventListener('click', (evt) => {
-      evt.preventDefault();
+    pointEditComponent.setPointRollUpHandler(() => {
       replaceEditFormToPoint();
       document.removeEventListener('keydown', onEscKeyDown);
     });
 
-    editPointView.element.querySelector('form').addEventListener('submit', (evt) => {
-      evt.preventDefault();
+    pointEditComponent.setPointSaveHandler(() => {
       replaceEditFormToPoint();
       document.removeEventListener('keydown', onEscKeyDown);
     });
 
-    render(pointView, this.#component.element);
-  }
-
-  constructor({container}){
-    this.#component = new ListPointsView();
-    this.#container = container;
-    this.#pointModel = new PointModel();
-  }
-
-  init() {
-    const points = this.#pointModel.points;
-    if (points.length === 0){
-      render(new NoPointView(), this.#container);
-    }
-    else{
-      render(new SortView(), this.#container, RenderPosition.BEFOREEND);
-      render (this.#component, this.#container);
-      for (const point of this.#pointModel.points){
-        this.#renderPoint(point);
-      }
-    }
-  }
+    render(pointComponent, this.#pointListComponent.element);
+  };
 }
