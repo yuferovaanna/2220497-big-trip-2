@@ -11,12 +11,12 @@ const TYPES = [
 ];
 
 const OFFER_TITLES = [
-  'Upgrade to a business class', 
-  'Switch to comfort', 
-  'Rent a car', 
-  'Add breakfast', 
-  'Order taxi', 
+  'Upgrade to a business class',
+  'Switch to comfort',
+  'Rent a car',
+  'Add breakfast',
+  'Order taxi',
   'Add luggage'
 ];
 
-export { TYPES, OFFER_TITLES};
+export { TYPES, OFFER_TITLES };
