@@ -4,6 +4,8 @@ import ListPointsView from '../view/trip-list.js';
 import PointView from '../view/point.js';
 import EditPointView from '../view/point-edition.js';
 import PointModel from '../model/point-model.js';
+import NoPointView from '../view/nothing-point.js';
+
 
 export default class Trip {
   #component = null;
@@ -57,10 +59,16 @@ export default class Trip {
   }
 
   init() {
-    render(new SortView(), this.#container, RenderPosition.BEFOREEND);
-    render (this.#component, this.#container);
-    for (const point of this.#pointModel.points){
-      this.#renderPoint(point);
+    const points = this.#pointModel.points;
+    if (points.length === 0){
+      render(new NoPointView(), this.#container);
+    }
+    else{
+      render(new SortView(), this.#container, RenderPosition.BEFOREEND);
+      render (this.#component, this.#container);
+      for (const point of this.#pointModel.points){
+        this.#renderPoint(point);
+      }
     }
   }
 }

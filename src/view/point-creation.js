@@ -1,4 +1,4 @@
-import {createElement} from '../render';
+import { createElement } from '../render';
 
 const createNewPointTemplate = () => (
   `<li class="trip-events__item">
