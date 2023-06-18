@@ -19,4 +19,10 @@ const OFFER_TITLES = [
   'Add luggage'
 ];
 
-export { TYPES, OFFER_TITLES };
+const SortType = {
+  DEFAULT: 'day',
+  TIME: 'time',
+  PRICE: 'price',
+};
+
+export {TYPES, OFFER_TITLES, SortType};
