@@ -1,7 +1,7 @@
 import { render } from '../framework/render.js';
-import EmptyListView from '../view/nothing-point.js';
-import PointListView from '../view/point-list.js';
-import PointSortView from '../view/sort.js';
+import EmptyListView from '../view/nothing-point-view.js';
+import PointListView from '../view/point-list-view.js';
+import PointSortView from '../view/sort-view.js';
 import PointPresenter from './point-presenter.js';
 import { updateItem } from '../utils/common.js';
 

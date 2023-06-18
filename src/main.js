@@ -1,8 +1,8 @@
 import { RenderPosition, render } from './framework/render.js';
 import PointsModel from './model/point-model.js';
-import PointFilterView from './view/filters.js';
+import PointFilterView from './view/filters-view.js';
 import RoutePresenter from './presenter/trip-presenter.js';
-import TripInfoView from './view/info-trip.js';
+import TripInfoView from './view/info-trip-view.js';
 import { generateFilter } from './mock/filter.js';
 
 const headerElement = document.querySelector('.page-header');

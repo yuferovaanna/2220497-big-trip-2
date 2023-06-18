@@ -1,6 +1,6 @@
 import { render, replace, remove } from '../framework/render.js';
-import PointEditView from '../view/point-edition.js';
-import PointView from '../view/point.js';
+import PointEditView from '../view/point-edition-view.js';
+import PointView from '../view/point-view.js';
 
 const Mode = {
   DEFAULT: 'default',
