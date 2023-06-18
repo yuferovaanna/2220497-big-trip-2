@@ -12,6 +12,19 @@ const TYPES = [
   'restaurant'
 ];
 
+const OFFER_TITLES = [
+  'Add breakfast',
+  'Add luggage',
+  'Add late check-out',
+  'Room with a beautiful view',
+  'Order a taxi',
+  'Switch to comfort',
+  'Switch to business',
+  'Rent a car',
+  'Upgrade to business class',
+  'Upgrade to Space+ Seat',
+];
+
 const FilterType = {
   EVERYTHING: 'everything',
   FUTURE: 'future',
