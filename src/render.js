@@ -2,7 +2,7 @@ const RenderPosition = {
   BEFOREBEGIN: 'beforebegin',
   AFTERBEGIN: 'afterbegin',
   BEFOREEND: 'beforeend',
-  AFTEREND: 'afterend'
+  AFTEREND: 'afterend',
 };
 
 const createElement = (template) => {
@@ -31,4 +31,4 @@ const render = (component, container, place = RenderPosition.BEFOREEND) => {
   }
 };
 
-export { RenderPosition, createElement, render };
+export {RenderPosition, createElement, render};

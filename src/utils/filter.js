@@ -1,15 +1,10 @@
 import { isPointPlanned, isPointPassed } from './task';
-
-const FilterTypes = {
-  EVERYTHING: 'everything',
-  FUTURE: 'future',
-  PAST: 'past'
-};
+import { FilterType } from '../mock/const';
 
 const filter = {
-  [FilterTypes.EVERYTHING]: (points) => points.map((point) => point),
-  [FilterTypes.FUTURE]: (points) => points.filter((point) => isPointPlanned(point.startDate, point.endDate)),
-  [FilterTypes.PAST]: (points) => points.filter((point) => isPointPassed(point.startDate, point.endDate))
+  [FilterType.EVERYTHING]: (points) => points.map((point) => point),
+  [FilterType.FUTURE]: (points) => points.filter((point) => isPointPlanned(point.startDate, point.endDate)),
+  [FilterType.PAST]: (points) => points.filter((point) => isPointPassed(point.startDate, point.endDate))
 };
 
-export { filter };
+export {filter};
