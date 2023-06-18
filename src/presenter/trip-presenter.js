@@ -4,17 +4,22 @@ import PointListView from '../view/point-list-view.js';
 import PointSortView from '../view/sort-view.js';
 import PointPresenter from './point-presenter.js';
 import { updateItem } from '../utils/common.js';
+import { SortType } from '../mock/const.js';
+import { sortPointsByPrice, sortPointsByDuration, sortPointsByDate } from '../utils/sort.js';
+
 
 export default class RoutePresenter {
   #routeContainer = null;
   #pointsModel = null;
+  #sortComponent = null;
 
   #pointListComponent = new PointListView();
-  #sortComponent = new PointSortView();
   #emptyListComponent = new EmptyListView();
 
   #routePoints = [];
   #pointPresenter = new Map();
+  #currentSortType = SortType.DEFAULT;
+  #initialRoutePoints = [];
 
   constructor(routeContainer, pointsModel) {
     this.#routeContainer = routeContainer;
@@ -22,7 +27,8 @@ export default class RoutePresenter {
   }
 
   init = () => {
-    this.#routePoints = [...this.#pointsModel.points];
+    this.#routePoints = [...this.#pointsModel.points].sort(sortPointsByDate);
+    this.#initialRoutePoints = [...this.#pointsModel.points];
     this.#renderPointList();
   };
 
@@ -32,12 +38,45 @@ export default class RoutePresenter {
 
   #handlePointChange = (updatedPoint) => {
     this.#routePoints = updateItem(this.#routePoints, updatedPoint);
+    this.#initialRoutePoints = updateItem(this.#initialRoutePoints, updatedPoint);
     this.#pointPresenter.get(updatedPoint.id).init(updatedPoint);
   };
 
-  #renderSort = () => {
-    render(this.#sortComponent,this.#routeContainer);
+  #sortPoints = (sortType) => {
+
+    switch (sortType) {
+      case SortType.PRICE:
+        this.#routePoints.sort(sortPointsByPrice);
+        break;
+      case SortType.TIME:
+        this.#routePoints.sort(sortPointsByDuration);
+        break;
+      default:
+        this.#routePoints.sort(sortPointsByDate);
+    }
+
+    this.#currentSortType = sortType;
   };
+
+  #handleSortTypeChange = (sortType) => {
+    if (this.#currentSortType === sortType) {
+      return;
+    }
+    this.#sortPoints(sortType);
+    this.#clearPointList();
+    this.#renderPointList();
+  };
+
+  #renderSort = () => {
+    if (this.#sortComponent instanceof PointSortView) {
+      remove(this.#sortComponent);
+    }
+
+    this.#sortComponent = new PointSortView(this.#currentSortType);
+    render(this.#sortComponent, this.#routeContainer);
+    this.#sortComponent.setSortTypeChangeHandler(this.#handleSortTypeChange);
+  };
+
 
   #renderEmptyList = () => {
     render(this.#emptyListComponent, this.#routeContainer);
